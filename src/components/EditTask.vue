@@ -2,8 +2,9 @@
     <div class="edit-item">
 
         <h2>Edit task</h2>
-        <input v-model="newStatus" type="checkbox" :checked="newStatus" @click="taskCompleted" class="margin-15">
-        <h3>{{singleItemInfo.title}}</h3>
+        <input v-model="newStatus" type="checkbox" :checked="newStatus" @click="taskCompleted" class="margin-40">
+        <p>Task completed</p>
+
 
         <div class="rename-title">
             <label for="rename-title">Rename title:</label>
@@ -12,11 +13,12 @@
 
         <div class="rename-description">
             <label for="rename-description">Edit Description:</label>
-            <textarea id="rename-description" v-model="newDescription"/>
+            <textarea id="rename-description" v-model="newDescription" v-text="singleItemInfo.description"></textarea>
         </div>
         <div class="edit-item-buttons">
+
+            <router-link to="/"><button>Cancel</button></router-link>
             <button @click="saveChanges(newTitle, newDescription, newStatus)">Save Changes</button>
-            <router-link to="/"><button>Go to main page</button></router-link>
         </div>
 
 
@@ -36,8 +38,8 @@
         },
         data(){
             return{
-                newTitle: '',
-                newDescription: '',
+                newTitle: this.singleItemInfo.title,
+                newDescription:  this.singleItemInfo.description,
                 newStatus:this.singleItemInfo.completed,
             }
         },
@@ -52,15 +54,10 @@
                 this.newStatus = !this.newStatus;
             },
             saveChanges(){
-                let checkedTitle = this.newTitle;
-                if(this.newTitle===''){
-                    checkedTitle = this.singleItemInfo.title;
-                }
-                let checkedDescription = this.newDescription;
-                if(this.newDescription===''){
-                    checkedDescription = this.singleItemInfo.title;
-                }
-                this.$store.commit('saveChanges',  {id: this.singleItemInfo.id, newTitle: checkedTitle, newDescription: checkedDescription, newStatus: this.newStatus});
+
+                this.$store.commit('saveChanges',  {id: this.singleItemInfo.id, newTitle: this.newTitle, newDescription: this.newDescription, newStatus: this.newStatus});
+
+                this.$router.push('/');
             },
         }
     }
@@ -74,8 +71,8 @@
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
         padding: 1rem;
         display: grid;
-        grid-template-columns: 20% 80%;
-        grid-template-rows: 2rem  auto auto auto;
+        grid-template-columns: 10% 90%;
+        grid-template-rows: 2rem  auto auto auto auto;
     }
     h2{
         grid-column: 1/3;
@@ -91,6 +88,7 @@
         grid-column: 2/3;
         grid-row: 2/3;
     }
+
     .rename-title{
         grid-column: 1/3;
         grid-row: 3/4;
@@ -109,8 +107,8 @@
     label{
         padding-right: 0.25rem;
     }
-    .margin-15{
-        margin-top: 20%
+    .margin-40{
+        margin-top: 40%
     }
 
 

@@ -1,24 +1,26 @@
 <template>
     <div class="single-item">
         <input :id=singleItem.id type="checkbox" @click="taskCompleted" :checked="singleItem.completed">
-        <h1>{{singleItem.title}} <span v-show="singleItem.completed">Task Completed</span></h1>
+        <span v-show="singleItem.completed">Task Completed</span>
+        <h1>{{singleItem.title}} </h1>
         <h3> {{singleItem.description}}</h3>
 
 
         <div class="single-item-buttons">
+            <button @click="toggleDeleteWindow">Delete</button>
             <router-link :to="{name: 'editTask',
                                     params: {singleItemInfo: singleItem}}" >
                 <button>Edit Task</button>
             </router-link>
 
-            <button @click="toggleDeleteWindow">Delete</button>
+
         </div>
         <div class="backdrop" v-show="showDeleteDialog">
             <transition name="modal">
                 <div class="delete-task" >
-                    <h3>Are you sure you want to delete this task </h3>
-                    <button @click="deleteTask">Yes</button>
+                    <h3>Are you sure you want to delete this task?</h3>
                     <button @click="toggleDeleteWindow">Cancel</button>
+                    <button @click="deleteTask">Yes</button>
                 </div>
             </transition>
 
@@ -98,7 +100,7 @@
         padding: 1rem;
         display: grid;
         grid-template-columns: 80% 20%;
-        grid-template-rows: 2rem auto auto;
+        grid-template-rows: 2rem auto auto auto;
     }
     .single-item input{
         grid-row: 1/2;
@@ -111,16 +113,19 @@
         margin: 0;
     }
     .single-item h3{
-        grid-row: 2/3;
+        grid-row: 3/4;
         grid-column: 1/3;
     }
     .single-item-buttons{
-        grid-row: 3/4;
+        grid-row: 4/5;
         grid-column: 1/3;
     }
     span{
         font-size: 1rem;
         color:#f1a80a;
+        grid-row: 2/3;
+        grid-column: 1/2;
+        margin: 0.75rem 0;
     }
     .delete-task{
         position: fixed;
@@ -151,6 +156,25 @@
         0% {opacity: 0; transform: translateY(-50px) scale(0.9);}
         100% {opacity:1; transform: translateY(0px) scale(1);}
 
+    }
+    @media only screen and (max-width: 500px) {
+        h1{
+            font-size: 1.2rem;
+        }
+        h3{
+            font-size: 1rem;
+        }
+        span{
+            font-size: 0.8rem;
+        }
+
+
+    }
+    @media only screen and (max-width: 600px) {
+        .delete-task{
+            width: 80%;
+            left: 5%;
+        }
     }
 
 </style>

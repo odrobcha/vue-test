@@ -19,9 +19,9 @@
                 </div>
 
                 <div>
-                    <button @click="addTask">Add Task</button>
-
                     <button @click="cancelAddTask">Cancel</button>
+
+                    <button @click="addTask">Add Task</button>
                 </div>
             </div>
         </transition>

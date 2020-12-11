@@ -51,6 +51,16 @@ export default {
         grid-template-columns: 20% 80%;
         grid-template-rows: 2rem auto auto;
     }
+    ul{
+        padding: 0;
+    }
+
+    @media only screen and (max-width: 500px) {
+        button{
+            font-size: 0.9rem;
+            padding: 0.5rem 1.5rem;
+        }
+    }
 
 </style>
 
